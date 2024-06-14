@@ -42,15 +42,8 @@ public class LikesController {
         return likesServ.createLike(likes);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteLike(@PathVariable Integer id, @RequestHeader Integer userid) throws AccessDeniedException {
-        Likes likes = likesServ.getLikeById(id).get();
-        if(!likes.getPublicacion().equals(userid)){
-            throw new AccessDeniedException("Accion denegada");
-        }
-        else if(publicacionServ.getPublicacionById(likes.getPublicacion()).isEmpty()){
-            throw new AccessDeniedException("Accion denegada");
-        }
+    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE, produces = "application/json")
+    public void deleteLike(@PathVariable Integer id) throws AccessDeniedException {
         likesServ.deleteLike(id);
     }
 }

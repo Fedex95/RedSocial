@@ -35,8 +35,8 @@ public class AmistadesController {
         return amistadesServ.createAmistad(amistades);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAmistad(@PathVariable Integer id) {
+    @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE, produces = "application/json")
+    public void deleteAmistad(@PathVariable Integer id) throws AccessDeniedException {
         amistadesServ.deleteAmistad(id);
     }
 }
