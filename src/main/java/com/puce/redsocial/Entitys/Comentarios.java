@@ -7,36 +7,43 @@ import java.sql.Timestamp;
 @Entity
 public class Comentarios {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private Publicacion publicacion;
-    @ManyToOne
-    private Usuario usuario;
+    private Integer id;
+    private Integer publicacionid;
+    private Integer usuarioid;
     private String contenido;
     private Timestamp fechaComentario;
 
-    public Long getId() {
+    public Comentarios() {}
+
+    public Comentarios(Integer usuarioid, Integer id, Integer publicacionid, String contenido) {
+        this.usuarioid = usuarioid;
+        this.id = id;
+        this.publicacionid = publicacionid;
+        this.contenido = contenido;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Publicacion getPublicacion() {
-        return publicacion;
+    public Integer getPublicacion() {
+        return publicacionid;
     }
 
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
+    public void setPublicacion(Integer publicacionid) {
+        this.publicacionid = publicacionid;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Integer getUsuario() {
+        return usuarioid;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Integer usuario) {
+        this.usuarioid = usuario;
     }
 
     public String getContenido() {

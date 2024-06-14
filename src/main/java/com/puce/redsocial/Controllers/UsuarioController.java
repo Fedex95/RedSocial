@@ -2,11 +2,12 @@ package com.puce.redsocial.Controllers;
 
 import com.puce.redsocial.Entitys.Usuario;
 import com.puce.redsocial.Services.UsuarioService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.nio.file.AccessDeniedException;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -15,28 +16,31 @@ public class UsuarioController {
     private UsuarioService usuarioServ;
 
     @GetMapping
-    public List<Usuario> getAllUsers() {
+    public Iterable<Usuario> getAllUsers() {
         return usuarioServ.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public Usuario getUserById(@PathVariable Long id) {
+    public Optional<Usuario> getUserById(@PathVariable Integer id) {
         return usuarioServ.getUserById(id);
     }
 
-    @PostMapping
+    @RequestMapping(value = "/save", method = RequestMethod.POST, produces = "application/json")
     public Usuario createUser(@RequestBody Usuario usuario) {
         return usuarioServ.createUser(usuario);
     }
 
-    @PutMapping("/{id}")
-    public Usuario updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
+    @PutMapping("/update/{id}")
+    public Usuario updateUser(@PathVariable Integer id, @RequestBody Usuario usuario) {
         return usuarioServ.updateUser(id, usuario);
     }
 
-    @DeleteMapping("/{id}")
-    @RolesAllowed("ADMINISTRADOR")
-    public void deleteUser(@PathVariable Long id) {
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE, produces= "application/json")
+    public void deleteUser(@PathVariable Integer id, @RequestHeader Integer userid) throws AccessDeniedException {
+        Usuario usuario = usuarioServ.getUserById(userid).get();
+        if (!usuario.getRol().equals("ADMINISTRADOR")) {
+            throw new AccessDeniedException("Este usuario no tiene permisos");
+        }
         usuarioServ.deleteUser(id);
     }
 }

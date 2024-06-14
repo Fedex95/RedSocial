@@ -5,33 +5,39 @@ import jakarta.persistence.*;
 @Entity
 public class Likes {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private Publicacion publicacion;
-    @ManyToOne
-    private Usuario usuario;
+    private Integer id;
+    private Integer publicacionid;
+    private Integer usuarioid;
 
-    public Long getId() {
+    public Likes() {}
+
+    public Likes(Integer id, Integer publicacionid, Integer usuarioid) {
+        this.id = id;
+        this.publicacionid = publicacionid;
+        this.usuarioid = usuarioid;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Publicacion getPublicacion() {
-        return publicacion;
+    public Integer getPublicacion() {
+        return publicacionid;
     }
 
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
+    public void setPublicacion(Integer publicacion) {
+        this.publicacionid = publicacionid;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Integer getUsuario() {
+        return usuarioid;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Integer usuario) {
+        this.usuarioid = usuarioid;
     }
 }

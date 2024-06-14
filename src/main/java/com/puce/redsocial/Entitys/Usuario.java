@@ -1,24 +1,47 @@
 package com.puce.redsocial.Entitys;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Entity
-public class Usuario {
+@Table(name="usuario")
+@XmlRootElement
+public class Usuario implements Serializable{
+    private static final long serialVersionUID = -92346781936044228L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String nombre;
     private String correo;
     private String contraseña;
     private String bio;
+    private String rol;
 
-    public Long getId() {
+    public Usuario() {}
+
+    public Usuario(Integer id, String nombre, String contraseña, String correo, String bio, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.contraseña = contraseña;
+        this.correo = correo;
+        this.bio = bio;
+        this.rol = rol;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

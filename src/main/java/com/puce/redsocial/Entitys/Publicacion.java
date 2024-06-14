@@ -7,26 +7,33 @@ import java.sql.Timestamp;
 @Entity
 public class Publicacion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private Usuario usuario;
+    private Integer id;
+    private Integer usuarioId;
     private String contenido;
     private Timestamp fechaPublicacion;
 
-    public Long getId() {
+    public Publicacion() {}
+
+    public Publicacion(Integer id, Integer usuarioId, String contenido) {
+        this.id = id;
+        this.usuarioId = usuarioId;
+        this.contenido = contenido;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Integer getUsuario() {
+        return usuarioId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Integer usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getContenido() {

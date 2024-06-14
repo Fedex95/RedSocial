@@ -7,34 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
     @Autowired
     private UsuarioRepositorio usuarioRep;
 
-    public List<Usuario> getAllUsers() {
+    public Iterable<Usuario> getAllUsers() {
         return usuarioRep.findAll();
     }
 
-    public Usuario getUserById(Long id) {
-        return usuarioRep.findById(id).orElseThrow(() -> new RuntimeException("Usuario no existente"));
+    public Optional <Usuario> getUserById(Integer id) {
+        return usuarioRep.findById(id);
     }
 
     public Usuario createUser(Usuario usuario) {
         return usuarioRep.save(usuario);
     }
 
-    public Usuario updateUser(Long id, Usuario usuario) {
-        Usuario user = getUserById(id);
+    public Usuario updateUser(Integer id, Usuario usuario) {
+        Usuario user = getUserById(id).get();
         user.setNombre(usuario.getNombre());
         user.setCorreo(usuario.getCorreo());
         user.setContraseña(usuario.getContraseña());
         user.setBio(usuario.getBio());
         return usuarioRep.save(user);
     }
-    @RolesAllowed("ADMINISTRADOR")
-    public void deleteUser(Long id) {
+    public void deleteUser(Integer id) {
         usuarioRep.deleteById(id);
     }
 }
